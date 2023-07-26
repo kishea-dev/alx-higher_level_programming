@@ -1,13 +1,11 @@
 #!/usr/bin/node
-// script that computes the number of tasks completed by user id.
-// API URL: https://jsonplaceholder.typicode.com/todos
 
 const request = require('request');
-
 const url = process.argv[2];
-request.get(url, (error, response, body) => {
-  if (error) {
-    console.log(error);
+
+request(url, function (err, response, body) {
+  if (err) {
+    console.log(err);
   } else if (response.statusCode === 200) {
     const completed = {};
     const tasks = JSON.parse(body);
@@ -22,5 +20,7 @@ request.get(url, (error, response, body) => {
       }
     }
     console.log(completed);
+  } else {
+    console.log('An error occured. Status code: ' + response.statusCode);
   }
 });
